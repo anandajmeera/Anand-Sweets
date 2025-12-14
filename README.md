@@ -4,16 +4,26 @@ A full-stack web application for managing a sweet shop, built with **FastAPI** (
 
 ## 🌐 Demo
 
-> **Note**: This project runs locally. Follow the [Installation & Setup](#-installation--setup) instructions below to run it on your machine.
+**Live Website**: [https://anand-sweets.vercel.app](https://anand-sweets.vercel.app) 🚀
 
-**Local Access:**
+> **Note**: The live site showcases the frontend UI/UX. Backend features (login, registration, purchases) require local setup.
+
+**Local Development:**
 - Frontend: `http://localhost:5173`
 - Backend API: `http://localhost:8000`
 - API Documentation: `http://localhost:8000/docs`
 
-**Deployment Options:**
-- Frontend can be deployed to: Vercel, Netlify, or GitHub Pages
-- Backend can be deployed to: Railway, Render, or Heroku
+**Quick Start:**
+```bash
+# Backend
+cd backend
+..\venv\Scripts\activate
+python -m uvicorn app.main:app --reload --port 8000
+
+# Frontend (new terminal)
+cd frontend
+npm run dev
+```
 
 ## 🚀 Features
 
