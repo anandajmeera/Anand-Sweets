@@ -59,13 +59,7 @@ function Register() {
     return (
         <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-pink-50 to-red-50 px-4 py-8">
             <div className="bg-white p-6 sm:p-8 rounded-2xl shadow-2xl w-full max-w-md border border-gray-100">
-                {/* Demo Notice */}
-                {window.location.hostname !== 'localhost' && (
-                    <div className="mb-4 bg-blue-50 border border-blue-200 text-blue-800 px-4 py-3 rounded-lg text-sm">
-                        <p className="font-semibold">📱 Live Demo - UI Showcase</p>
-                        <p className="text-xs mt-1">This demo displays the frontend design. For full functionality, see the <a href="https://github.com/anandajmeera/Anand-Sweets" className="underline font-medium" target="_blank" rel="noopener noreferrer">GitHub repo</a>.</p>
-                    </div>
-                )}
+
 
                 <h2 className="text-3xl font-bold mb-2 text-center text-primary">Register</h2>
                 <p className="text-center text-gray-500 mb-6 text-sm">Create your Anand Sweets account</p>
