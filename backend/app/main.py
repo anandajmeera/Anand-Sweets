@@ -10,10 +10,10 @@ Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="Anand Sweets API")
 
-# CORS
+# CORS - Allow all localhost ports for development
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://localhost:5174", "http://localhost:5175"],
+    allow_origins=["*"],  # Allow all origins in development
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
