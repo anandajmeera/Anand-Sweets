@@ -2,6 +2,19 @@
 
 A full-stack web application for managing a sweet shop, built with **FastAPI** (Backend) and **React** (Frontend).
 
+## 🌐 Demo
+
+> **Note**: This project runs locally. Follow the [Installation & Setup](#-installation--setup) instructions below to run it on your machine.
+
+**Local Access:**
+- Frontend: `http://localhost:5173`
+- Backend API: `http://localhost:8000`
+- API Documentation: `http://localhost:8000/docs`
+
+**Deployment Options:**
+- Frontend can be deployed to: Vercel, Netlify, or GitHub Pages
+- Backend can be deployed to: Railway, Render, or Heroku
+
 ## 🚀 Features
 
 - **Authentication**: Secure User Registration & Login (JWT / PBKDF2).
@@ -37,6 +50,10 @@ A full-stack web application for managing a sweet shop, built with **FastAPI** (
 ## 📥 Installation & Setup
 
 1. **Clone the project repository**
+   ```bash
+   git clone https://github.com/anandajmeera/Anand-Sweets.git
+   cd Anand-Sweets
+   ```
 
 2. **Backend Setup**
    ```bash
