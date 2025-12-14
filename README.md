@@ -2,12 +2,15 @@
 
 A full-stack web application for managing a sweet shop, built with **FastAPI** (Backend) and **React** (Frontend).
 
-## 🌐 Demo
+## 🌐 Live Demo
 
-### Live Website (Frontend Only)
-**🔗 https://anand-sweets.vercel.app**
+### Primary Site (Vercel)
+**🔗 [https://anand-sweets.vercel.app](https://anand-sweets.vercel.app)**
 
-> **Note**: The live site showcases the **frontend UI/UX design**. Backend features (authentication, purchases, admin panel) require local setup.
+### Alternative Site (GitHub Pages)
+**🔗 [https://anandajmeera.github.io/Anand-Sweets/](https://anandajmeera.github.io/Anand-Sweets/)**
+
+> **Both sites are fully functional** with authentication, purchases, and admin features connected to the live backend.
 
 ### Full-Stack Demo (Local)
 For complete functionality including backend features:
