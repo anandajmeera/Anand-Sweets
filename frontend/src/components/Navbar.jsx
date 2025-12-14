@@ -32,7 +32,7 @@ function Navbar() {
         <nav className="bg-gradient-to-r from-pink-500 to-red-500 text-white p-4 shadow-lg sticky top-0 z-50">
             <div className="container mx-auto flex justify-between items-center">
                 <div className="flex items-center space-x-8">
-                    <Link to="/" className="text-3xl font-extrabold font-serif tracking-wide hover:text-yellow-200 transition duration-300">
+                    <Link to="/" className="text-4xl font-extrabold font-serif tracking-wide hover:opacity-90 transition duration-300" style={{ fontFamily: '"Playfair Display", serif', background: 'linear-gradient(to right, #FFD700, #FFFACD, #FFD700)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', textShadow: '2px 2px 4px rgba(0,0,0,0.3)' }}>
                         Anand Sweets 🍬
                     </Link>
                     <Link to="/" className="text-white hover:text-yellow-200 font-medium">Home</Link>

@@ -28,8 +28,11 @@ function Login() {
                 <h2 className="text-2xl font-bold mb-4 text-center text-primary">Login</h2>
                 {error && <p className="text-red-500 mb-4">{error}</p>}
                 <form onSubmit={handleSubmit}>
-                    <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full p-2 mb-4 border rounded" />
+                    <input type="text" placeholder="Email or Phone Number" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full p-2 mb-4 border rounded" />
                     <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} className="w-full p-2 mb-4 border rounded" />
+                    <div className="flex justify-end mb-4">
+                        <a href="/forgot-password" className="text-sm text-blue-500 hover:text-blue-700 hover:underline">Forgot Password?</a>
+                    </div>
                     <button type="submit" className="w-full bg-primary text-white p-2 rounded hover:bg-red-600">Login</button>
                 </form>
             </div>

@@ -70,6 +70,7 @@ function PaymentModal({ isOpen, onClose, onConfirm, sweetName, price }) {
                         >
                             <option value="Card">Credit/Debit Card</option>
                             <option value="UPI">UPI / Wallet</option>
+                            <option value="QR">Scan QR Code</option>
                             <option value="Cash">Cash on Delivery</option>
                         </select>
                     </div>
@@ -87,6 +88,15 @@ function PaymentModal({ isOpen, onClose, onConfirm, sweetName, price }) {
                     {paymentMode === 'UPI' && (
                         <div>
                             <input name="upiId" type="text" placeholder="Enter UPI ID (e.g. user@oksbi)" value={details.upiId} onChange={handleInputChange} className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-pink-500 outline-none" required />
+                        </div>
+                    )}
+
+                    {paymentMode === 'QR' && (
+                        <div className="text-center p-4 bg-gray-50 rounded-xl border-2 border-dashed border-gray-300">
+                            <div className="bg-white mx-auto mb-2 flex items-center justify-center shadow-inner p-2 w-fit rounded-lg">
+                                <img src={`https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=Pay ₹${price * quantity} to Anand Sweets`} alt="QR Code" className="w-32 h-32" />
+                            </div>
+                            <p className="text-sm font-bold text-gray-600">Scan this QR to Pay instantly!</p>
                         </div>
                     )}
 

@@ -50,6 +50,14 @@ function Admin() {
 
     // ... existing fetch functions ...
 
+    const handleEdit = (sweet) => {
+        setFormData(sweet);
+        setEditId(sweet.id);
+        setEditMode(true);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        alert(`Editing ${sweet.name}. Scroll up to modify details! ✏️`);
+    };
+
     // Updated Handler for Create/Update
     const handleSubmit = async (e) => {
         e.preventDefault();
