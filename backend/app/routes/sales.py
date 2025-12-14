@@ -42,3 +42,15 @@ def get_sales_stats(db: Session = Depends(get_db), current_user: User = Depends(
         orders_today=orders_today,
         low_stock_items=low_stock
     )
+
+@router.delete("/", status_code=status.HTTP_204_NO_CONTENT)
+def delete_all_sales(db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+    if not current_user.is_admin:
+        raise HTTPException(status_code=403, detail="Not authorized")
+    
+    # Delete all items first (foreign key constraint)
+    db.query(SaleItem).delete()
+    # Then delete sales
+    db.query(Sale).delete()
+    db.commit()
+    return None

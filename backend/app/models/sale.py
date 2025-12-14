@@ -30,3 +30,7 @@ class SaleItem(Base):
 
     sale = relationship("Sale", back_populates="items")
     sweet = relationship("app.models.sweet.Sweet")
+
+    @property
+    def sweet_name(self):
+        return self.sweet.name if self.sweet else "Unknown Sweet"

@@ -99,6 +99,19 @@ function Admin() {
         }
     };
 
+    const handleClearHistory = async () => {
+        if (window.confirm('Are you sure you want to DELETE ALL sales history? This cannot be undone.')) {
+            try {
+                await api.delete('/sales');
+                alert('Sales history cleared.');
+                fetchStats();
+                fetchSales();
+            } catch (err) {
+                alert('Error clearing history: ' + (err.response?.data?.detail || 'Unauthorized'));
+            }
+        }
+    };
+
     return (
         <div className="min-h-screen bg-gray-50 p-8">
             <div className="container mx-auto">
@@ -120,11 +133,7 @@ function Admin() {
                     </div>
                 </div>
 
-                <div className="bg-white p-8 rounded-2xl shadow-xl mb-12 border border-gray-100">
-                    <h2 className="text-2xl font-bold mb-6 text-gray-800 flex items-center">
-                        <span className="bg-blue-100 text-blue-600 p-2 rounded-lg mr-3">{editMode ? '✏️' : '➕'}</span>
-                        {editMode ? 'Edit Sweet' : 'Add New Sweet'}
-                    </h2>
+                <div className={`bg-white p-8 rounded-2xl shadow-xl mb-12 border border-gray-100 transition-all duration-300 ${editMode ? 'ring-4 ring-yellow-400 bg-yellow-50 transform scale-[1.01]' : ''}`}>
                     <h2 className="text-2xl font-bold mb-6 text-gray-800 flex items-center">
                         <span className="bg-blue-100 text-blue-600 p-2 rounded-lg mr-3">{editMode ? '✏️' : '➕'}</span>
                         {editMode ? 'Edit Sweet' : 'Add New Sweet'}
@@ -135,7 +144,7 @@ function Admin() {
                         <input name="category" placeholder="Category (e.g. Traditional)" value={formData.category} onChange={handleChange} className="p-3 border rounded-xl focus:ring-2 focus:ring-blue-400 focus:border-transparent outline-none transition" required />
                         <div className="relative">
                             <span className="absolute left-3 top-3 text-gray-400">₹</span>
-                            <input name="price" type="number" placeholder="Price" value={formData.price} onChange={handleChange} className="p-3 pl-8 w-full border rounded-xl focus:ring-2 focus:ring-blue-400 focus:border-transparent outline-none transition" required />
+                            <input name="price" type="number" min="0.01" step="0.01" placeholder="Price" value={formData.price} onChange={handleChange} className="p-3 pl-8 w-full border rounded-xl focus:ring-2 focus:ring-blue-400 focus:border-transparent outline-none transition" required />
                         </div>
                         <input name="quantity" type="number" placeholder="Initial Stock Quantity" value={formData.quantity} onChange={handleChange} className="p-3 border rounded-xl focus:ring-2 focus:ring-blue-400 focus:border-transparent outline-none transition" required />
                         <textarea name="description" placeholder="Description of the sweet..." value={formData.description} onChange={handleChange} className="p-3 border rounded-xl focus:ring-2 focus:ring-blue-400 focus:border-transparent outline-none transition md:col-span-2 h-24" />
@@ -195,34 +204,47 @@ function Admin() {
 
                     {/* Sales History Table */}
                     <div className="bg-white p-8 rounded-2xl shadow-xl border border-gray-100">
-                        <h2 className="text-2xl font-bold mb-6 text-gray-800 flex items-center">
-                            <span className="bg-yellow-100 text-yellow-600 p-2 rounded-lg mr-3">💰</span>
-                            Sales History
-                        </h2>
-                        <div className="overflow-x-auto max-h-96">
-                            <table className="w-full text-left border-collapse">
-                                <thead className="sticky top-0 bg-white">
-                                    <tr className="bg-gray-100 text-gray-600 uppercase text-sm leading-normal">
-                                        <th className="py-3 px-4">Bill No</th>
-                                        <th className="py-3 px-4">Amount</th>
-                                        <th className="py-3 px-4">Mode</th>
-                                        <th className="py-3 px-4">Date</th>
-                                    </tr>
-                                </thead>
-                                <tbody className="text-gray-600 text-sm font-light">
-                                    {sales.map(sale => (
-                                        <tr key={sale.id} className="border-b border-gray-200 hover:bg-gray-50">
-                                            <td className="py-3 px-4 font-mono text-xs">{sale.bill_number}</td>
-                                            <td className="py-3 px-4 font-bold">₹{sale.total_amount}</td>
-                                            <td className="py-3 px-4">
-                                                <span className="px-2 py-1 rounded-md bg-gray-100 text-xs font-semibold">{sale.payment_mode}</span>
-                                            </td>
-                                            <td className="py-3 px-4 text-xs">{new Date(sale.created_at).toLocaleDateString()}</td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
+                        <div className="flex justify-between items-center mb-6">
+                            <h2 className="text-2xl font-bold text-gray-800 flex items-center">
+                                <span className="bg-yellow-100 text-yellow-600 p-2 rounded-lg mr-3">💰</span>
+                                Sales History
+                            </h2>
+                            {sales.length > 0 && (
+                                <button onClick={handleClearHistory} className="text-red-500 hover:text-red-700 font-bold text-sm bg-red-50 px-3 py-1 rounded-lg">
+                                    Clear History
+                                </button>
+                            )}
                         </div>
+                        {sales.length === 0 ? (
+                            <div className="text-center py-8 text-gray-500 italic">
+                                No sales yet. Start selling some sweets! 🍬
+                            </div>
+                        ) : (
+                            <div className="overflow-x-auto max-h-96">
+                                <table className="w-full text-left border-collapse">
+                                    <thead className="sticky top-0 bg-white">
+                                        <tr className="bg-gray-100 text-gray-600 uppercase text-sm leading-normal">
+                                            <th className="py-3 px-4">Bill No</th>
+                                            <th className="py-3 px-4">Amount</th>
+                                            <th className="py-3 px-4">Mode</th>
+                                            <th className="py-3 px-4">Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="text-gray-600 text-sm font-light">
+                                        {sales.map(sale => (
+                                            <tr key={sale.id} className="border-b border-gray-200 hover:bg-gray-50">
+                                                <td className="py-3 px-4 font-mono text-xs">{sale.bill_number}</td>
+                                                <td className="py-3 px-4 font-bold">₹{sale.total_amount}</td>
+                                                <td className="py-3 px-4">
+                                                    <span className="px-2 py-1 rounded-md bg-gray-100 text-xs font-semibold">{sale.payment_mode}</span>
+                                                </td>
+                                                <td className="py-3 px-4 text-xs">{new Date(sale.created_at).toLocaleDateString()}</td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
