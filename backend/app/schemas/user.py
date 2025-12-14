@@ -7,6 +7,7 @@ class UserBase(BaseModel):
 class UserCreate(UserBase):
     password: str
     full_name: str
+    is_admin: bool = False
 
 class UserLogin(BaseModel):
     email: EmailStr
