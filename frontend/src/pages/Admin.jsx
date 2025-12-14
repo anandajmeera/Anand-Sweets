@@ -44,16 +44,34 @@ function Admin() {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
+    // State and Handlers
+    const [editMode, setEditMode] = useState(false);
+    const [editId, setEditId] = useState(null);
+
+    // ... existing fetch functions ...
+
+    // Updated Handler for Create/Update
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await api.post('/sweets', formData);
-            alert('Sweet added successfully!');
+            if (editMode) {
+                await api.put(`/sweets/${editId}`, formData);
+                alert('Sweet updated successfully!');
+            } else {
+                await api.post('/sweets', formData);
+                alert('Sweet added successfully!');
+            }
             fetchSweets();
-            setFormData({ name: '', category: '', price: '', quantity: '', description: '' });
+            resetForm();
         } catch (err) {
-            alert('Error adding sweet: ' + (err.response?.data?.detail || 'Unauthorized'));
+            alert('Error saving sweet: ' + (err.response?.data?.detail || 'Unauthorized'));
         }
+    };
+
+    const resetForm = () => {
+        setFormData({ name: '', category: '', price: '', quantity: '', description: '' });
+        setEditMode(false);
+        setEditId(null);
     };
 
     const handleDelete = async (id) => {
@@ -104,10 +122,15 @@ function Admin() {
 
                 <div className="bg-white p-8 rounded-2xl shadow-xl mb-12 border border-gray-100">
                     <h2 className="text-2xl font-bold mb-6 text-gray-800 flex items-center">
-                        <span className="bg-blue-100 text-blue-600 p-2 rounded-lg mr-3">➕</span>
-                        Add New Sweet
+                        <span className="bg-blue-100 text-blue-600 p-2 rounded-lg mr-3">{editMode ? '✏️' : '➕'}</span>
+                        {editMode ? 'Edit Sweet' : 'Add New Sweet'}
+                    </h2>
+                    <h2 className="text-2xl font-bold mb-6 text-gray-800 flex items-center">
+                        <span className="bg-blue-100 text-blue-600 p-2 rounded-lg mr-3">{editMode ? '✏️' : '➕'}</span>
+                        {editMode ? 'Edit Sweet' : 'Add New Sweet'}
                     </h2>
                     <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {/* Inputs remain same */}
                         <input name="name" placeholder="Sweet Name" value={formData.name} onChange={handleChange} className="p-3 border rounded-xl focus:ring-2 focus:ring-blue-400 focus:border-transparent outline-none transition" required />
                         <input name="category" placeholder="Category (e.g. Traditional)" value={formData.category} onChange={handleChange} className="p-3 border rounded-xl focus:ring-2 focus:ring-blue-400 focus:border-transparent outline-none transition" required />
                         <div className="relative">
@@ -116,10 +139,19 @@ function Admin() {
                         </div>
                         <input name="quantity" type="number" placeholder="Initial Stock Quantity" value={formData.quantity} onChange={handleChange} className="p-3 border rounded-xl focus:ring-2 focus:ring-blue-400 focus:border-transparent outline-none transition" required />
                         <textarea name="description" placeholder="Description of the sweet..." value={formData.description} onChange={handleChange} className="p-3 border rounded-xl focus:ring-2 focus:ring-blue-400 focus:border-transparent outline-none transition md:col-span-2 h-24" />
-                        <button type="submit" className="bg-blue-600 text-white p-4 rounded-xl hover:bg-blue-700 md:col-span-2 font-bold shadow-lg transform hover:scale-[1.02] transition duration-200">
-                            Add Sweet to Inventory
-                        </button>
+
+                        <div className="md:col-span-2 flex gap-4">
+                            <button type="submit" className={`flex-1 text-white p-4 rounded-xl font-bold shadow-lg transform hover:scale-[1.02] transition duration-200 ${editMode ? 'bg-yellow-500 hover:bg-yellow-600' : 'bg-blue-600 hover:bg-blue-700'}`}>
+                                {editMode ? 'Update Sweet' : 'Add Sweet to Inventory'}
+                            </button>
+                            {editMode && (
+                                <button type="button" onClick={resetForm} className="bg-gray-500 text-white p-4 rounded-xl hover:bg-gray-600 font-bold shadow-lg transform hover:scale-[1.02] transition duration-200">
+                                    Cancel
+                                </button>
+                            )}
+                        </div>
                     </form>
+
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -150,6 +182,7 @@ function Admin() {
                                                 </span>
                                             </td>
                                             <td className="py-3 px-6 flex space-x-2">
+                                                <button onClick={() => handleEdit(sweet)} className="text-yellow-500 hover:text-yellow-700 font-bold">Edit</button>
                                                 <button onClick={() => handleRestock(sweet.id)} className="text-blue-500 hover:text-blue-700 font-bold">Restock</button>
                                                 <button onClick={() => handleDelete(sweet.id)} className="text-red-500 hover:text-red-700 font-bold">Delete</button>
                                             </td>

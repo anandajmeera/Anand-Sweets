@@ -17,6 +17,17 @@ A full-stack web application for managing a sweet shop, built with **FastAPI** (
 - **Auth**: OAuth2 / JWT (PBKDF2 Hashing)
 - **Testing**: Pytest
 
+### 🔗 API Endpoints (Core)
+*   `POST /api/auth/register` - Register a new user
+*   `POST /api/auth/login` - Login and get JWT
+*   `GET /api/sweets` - List all sweets
+*   `GET /api/sweets/search?q=...` - Search sweets
+*   `POST /api/sweets` - Add new sweet (Admin)
+*   `PUT /api/sweets/{id}` - Update sweet details (Admin)
+*   `DELETE /api/sweets/{id}` - Remove sweet (Admin)
+*   `POST /api/sweets/{id}/purchase` - Buy sweet
+*   `POST /api/sweets/{id}/restock` - Restock inventory (Admin)
+
 ### Frontend
 - **Framework**: React (Vite)
 - **Styling**: Tailwind CSS

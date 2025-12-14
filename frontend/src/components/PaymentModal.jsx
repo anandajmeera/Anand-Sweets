@@ -5,16 +5,46 @@ function PaymentModal({ isOpen, onClose, onConfirm, sweetName, price }) {
 
     const [paymentMode, setPaymentMode] = useState('Card');
     const [quantity, setQuantity] = useState(1);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
     const [details, setDetails] = useState({ card: '', expiry: '', cvv: '', upiId: '' });
 
-    const handleSubmit = (e) => {
+    const handleInputChange = (e) => {
+        setDetails({ ...details, [e.target.name]: e.target.value });
+        setError('');
+    };
+
+    const validate = () => {
+        if (paymentMode === 'Card') {
+            if (details.card.length < 16) return "Card number must be 16 digits";
+            if (details.cvv.length < 3) return "Invalid CVV";
+        }
+        if (paymentMode === 'UPI') {
+            if (!details.upiId.includes('@')) return "Invalid UPI ID";
+        }
+        return null;
+    };
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        onConfirm(paymentMode, quantity);
+        const validationError = validate();
+        if (validationError) {
+            setError(validationError);
+            return;
+        }
+
+        setLoading(true);
+        // Simulate payment gateway delay
+        setTimeout(() => {
+            setLoading(false);
+            onConfirm(paymentMode, quantity);
+        }, 1500);
     };
 
     return (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 animate-fadeIn">
-            <div className="bg-white rounded-2xl shadow-2xl p-8 w-96 transform transition-all scale-100">
+            <div className="bg-white rounded-2xl shadow-2xl p-8 w-96 transform transition-all scale-100 relative">
+                <button onClick={onClose} className="absolute top-4 right-4 text-gray-400 hover:text-gray-600">✕</button>
                 <h2 className="text-2xl font-bold mb-4 text-gray-800">Secure Payment 🔒</h2>
                 <p className="mb-4 text-gray-600">Purchasing: <span className="font-bold text-pink-600">{sweetName}</span></p>
 
@@ -46,29 +76,37 @@ function PaymentModal({ isOpen, onClose, onConfirm, sweetName, price }) {
 
                     {paymentMode === 'Card' && (
                         <div className="space-y-3">
-                            <input type="text" placeholder="Card Number" className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-pink-500 outline-none" required maxLength="19" />
+                            <input name="card" type="text" placeholder="Card Number" value={details.card} onChange={handleInputChange} className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-pink-500 outline-none" required maxLength="16" />
                             <div className="flex space-x-2">
-                                <input type="text" placeholder="MM/YY" className="w-full p-2 border rounded-lg outline-none" required maxLength="5" />
-                                <input type="text" placeholder="CVV" className="w-full p-2 border rounded-lg outline-none" required maxLength="3" />
+                                <input name="expiry" type="text" placeholder="MM/YY" value={details.expiry} onChange={handleInputChange} className="w-full p-2 border rounded-lg outline-none" required maxLength="5" />
+                                <input name="cvv" type="text" placeholder="CVV" value={details.cvv} onChange={handleInputChange} className="w-full p-2 border rounded-lg outline-none" required maxLength="3" />
                             </div>
                         </div>
                     )}
 
                     {paymentMode === 'UPI' && (
                         <div>
-                            <input type="text" placeholder="Enter UPI ID (e.g. user@oksbi)" className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-pink-500 outline-none" required />
+                            <input name="upiId" type="text" placeholder="Enter UPI ID (e.g. user@oksbi)" value={details.upiId} onChange={handleInputChange} className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-pink-500 outline-none" required />
                         </div>
                     )}
 
-                    {paymentMode === 'Cash' && (
-                        <div className="p-3 bg-yellow-100 text-yellow-800 rounded-lg text-sm">
-                            Please pay cash at the counter upon delivery.
-                        </div>
-                    )}
+                    {error && <p className="text-red-500 text-sm font-bold text-center">{error}</p>}
 
                     <div className="flex justify-end space-x-3 mt-6">
-                        <button type="button" onClick={onClose} className="px-4 py-2 text-gray-600 hover:text-gray-800 font-medium">Cancel</button>
-                        <button type="submit" className="px-6 py-2 bg-green-500 text-white rounded-lg font-bold hover:bg-green-600 shadow-md">Pay ₹{price * quantity}</button>
+                        <button type="button" onClick={onClose} disabled={loading} className="px-4 py-2 text-gray-600 hover:text-gray-800 font-medium">Cancel</button>
+                        <button type="submit" disabled={loading} className={`px-6 py-2 text-white rounded-lg font-bold shadow-md flex items-center ${loading ? 'bg-gray-400' : 'bg-green-500 hover:bg-green-600'}`}>
+                            {loading ? (
+                                <>
+                                    <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                    </svg>
+                                    Processing...
+                                </>
+                            ) : (
+                                `Pay ₹${price * quantity}`
+                            )}
+                        </button>
                     </div>
                 </form>
             </div>
