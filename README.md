@@ -141,29 +141,25 @@ python -m pytest
 ![Payment](frontend/src/assets/payment_preview.png)
 *Secure Payment Modal with Quantity Selection*
 
-## 🚀 Deployment
+## 🚀 Deployment (LIVE)
+- **Frontend**: ✅ Deployed on Vercel: [https://anand-sweets.vercel.app](https://anand-sweets.vercel.app)
+- **Backend**: ✅ Deployed on Render: `https://anand-sweets-backend.onrender.com`
 
-### Current Status
-- **Frontend**: ✅ Deployed on Vercel (https://anand-sweets.vercel.app)
-- **Backend**: ⚠️ Local only (requires manual setup)
+### 🔑 Admin Credentials (For Testing)
+To access the Admin Dashboard functionalities:
+- **Email**: `admin@anand.com`
+- **Password**: `admin123`
+_(Note: For improved security, change this password immediately after logging in if required)_
 
-### Why Backend Isn't Deployed
-This is a **portfolio/demo project** designed to showcase:
-- Full-stack development skills
-- Modern UI/UX design
-- Clean, maintainable code
-- Professional deployment practices
-
-For a production deployment with full backend functionality, you would need:
-1. Cloud database (PostgreSQL/MongoDB)
-2. Backend hosting (Render/Railway/Heroku)
-3. Environment variable configuration
-4. CORS updates for production domains
-
-### Recommended Usage
-- **For Portfolio**: Share the Vercel link to showcase UI/UX
-- **For Demos**: Run locally to demonstrate full functionality
-- **For Code Review**: Direct to GitHub repository
+### Features Available
+| Feature | Status |
+|---------|--------|
+| UI/UX Design | ✅ |
+| User Registration | ✅ |
+| Login / Auth | ✅ |
+| Browse Sweets | ✅ |
+| Purchase Flow | ✅ |
+| Admin Inventory | ✅ |
 
 ## 🤖 My AI Usage
 
