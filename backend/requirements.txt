@@ -4,6 +4,7 @@ sqlalchemy
 pydantic
 pydantic-settings
 email-validator
+python-dotenv
 passlib
 bcrypt
 python-jose
