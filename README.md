@@ -72,6 +72,28 @@ python -m pytest
 - Responsive layout for mobile and desktop.
 - Custom Animations and Glassmorphism effects.
 
-## 🤖 AI Usage
-- **Tools**: Google Gemini (Antigravity Agent)
-- **Contribution**: Boilerplate generation, TDD test writing, UI component creation, and Debugging.
+## 📸 Screenshots
+
+![Login Page](frontend/src/assets/login_preview.png)
+*Login Screen with secure authentication*
+
+![Dashboard](frontend/src/assets/dashboard_preview.png)
+*Main Shop Dashboard with Search and Filters*
+
+![Payment](frontend/src/assets/payment_preview.png)
+*Secure Payment Modal with Quantity Selection*
+
+## 🤖 My AI Usage
+
+### Tools Used
+*   **Google Gemini (Antigravity Agent)**: Primary coding assistant.
+*   **Generate Image API**: Used to create realistic assets for sweets.
+
+### How I Used Them
+*   **Brainstorming**: "I used Gemini to brainstorm the database schema for the Sales and SaleItems tables."
+*   **TDD Workflow**: "I asked the AI to write failing Pytest unit tests for the inventory logic before implementing the endpoints."
+*   **Debugging**: "I used the AI to diagnose a tricky CORS issue where the frontend port was dynamic."
+*   **UI Design**: "I described the 'Premium Indian Sweet Shop' vibe, and the AI generated the Tailwind CSS classes and color palette."
+
+### Reflection
+AI significantly accelerated the boilerplate code generation (FastAPI setups, React components), allowing me to focus on the business logic (inventory management, billing). It also helped enforce the TDD pattern by generating test skeletons first. However, manual review was crucial for fixing specific logical errors in the authentication flow.

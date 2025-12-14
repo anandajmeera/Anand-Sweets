@@ -40,17 +40,25 @@ function Dashboard() {
         setIsModalOpen(true);
     };
 
-    const handlePaymentConfirm = async (paymentMode) => {
+    const handlePaymentConfirm = async (paymentMode, quantity) => {
         if (!selectedSweet) return;
         try {
-            await api.post(`/sweets/${selectedSweet.id}/purchase?quantity=1&payment_mode=${paymentMode}`);
-            alert(`Payment Successful via ${paymentMode}! You bought ${selectedSweet.name}.`);
+            await api.post(`/sweets/${selectedSweet.id}/purchase?quantity=${quantity}&payment_mode=${paymentMode}`);
+            alert(`Payment Successful via ${paymentMode}! You bought ${quantity} x ${selectedSweet.name}.`);
             setIsModalOpen(false);
             setSelectedSweet(null);
             fetchSweets();
         } catch (err) {
             alert('Purchase failed: ' + (err.response?.data?.detail || 'Error'));
         }
+    };
+
+    const sweetImages = {
+        "Motichoor Laddu": "/images/motichoor_laddu.png",
+        "Kaju Katli": "/images/kaju_katli.png",
+        "Gulab Jamun": "/images/gulab_jamun.png",
+        "Mysore Pak": "/images/mysore_pak.png",
+        "Rasgulla": "/images/rasgulla.png"
     };
 
     return (
@@ -75,10 +83,18 @@ function Dashboard() {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     {sweets.map(sweet => (
                         <div key={sweet.id} className="bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl hover:-translate-y-2 transition duration-300 transform border border-pink-100">
-                            <div className="h-48 bg-gradient-to-br from-yellow-100 to-pink-100 flex items-center justify-center relative">
-                                <span className="text-8xl filter drop-shadow hover:scale-110 transition duration-500 cursor-default">🍬</span>
+                            <div className="h-48 bg-gradient-to-br from-yellow-100 to-pink-100 flex items-center justify-center relative overflow-hidden group">
+                                {sweetImages[sweet.name] ? (
+                                    <img
+                                        src={sweetImages[sweet.name]}
+                                        alt={sweet.name}
+                                        className="w-full h-full object-cover transform group-hover:scale-110 transition duration-700"
+                                    />
+                                ) : (
+                                    <span className="text-8xl filter drop-shadow hover:scale-110 transition duration-500 cursor-default">🍬</span>
+                                )}
                                 {sweet.quantity < 5 && sweet.quantity > 0 && (
-                                    <span className="absolute top-2 right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full animate-pulse">Low Stock</span>
+                                    <span className="absolute top-2 right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full animate-pulse z-10">Low Stock</span>
                                 )}
                             </div>
                             <div className="p-6">
