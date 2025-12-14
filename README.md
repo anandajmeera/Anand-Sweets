@@ -4,26 +4,46 @@ A full-stack web application for managing a sweet shop, built with **FastAPI** (
 
 ## 🌐 Demo
 
-**Live Website**: [https://anand-sweets.vercel.app](https://anand-sweets.vercel.app) 🚀
+### Live Website (Frontend Only)
+**🔗 https://anand-sweets.vercel.app**
 
-> **Note**: The live site showcases the frontend UI/UX. Backend features (login, registration, purchases) require local setup.
+> **Note**: The live site showcases the **frontend UI/UX design**. Backend features (authentication, purchases, admin panel) require local setup.
 
-**Local Development:**
-- Frontend: `http://localhost:5173`
-- Backend API: `http://localhost:8000`
-- API Documentation: `http://localhost:8000/docs`
+### Full-Stack Demo (Local)
+For complete functionality including backend features:
+
+**Prerequisites:**
+- Python 3.11+
+- Node.js 16+
 
 **Quick Start:**
 ```bash
-# Backend
-cd backend
-..\venv\Scripts\activate
-python -m uvicorn app.main:app --reload --port 8000
+# 1. Start Backend (Terminal 1)
+cd "Anand Sweets"
+run_backend.bat  # or double-click the file
 
-# Frontend (new terminal)
+# 2. Start Frontend (Terminal 2)
 cd frontend
+npm install
 npm run dev
 ```
+
+**Access:**
+- Frontend: http://localhost:5173
+- Backend API: http://localhost:8000
+- API Docs: http://localhost:8000/docs
+
+### Features Available
+
+| Feature | Live (Vercel) | Local |
+|---------|---------------|-------|
+| UI/UX Design | ✅ | ✅ |
+| Responsive Layout | ✅ | ✅ |
+| User Registration | ❌ | ✅ |
+| Login/Authentication | ❌ | ✅ |
+| Browse Sweets | ✅ | ✅ |
+| Purchase Flow | ❌ | ✅ |
+| Admin Dashboard | ❌ | ✅ |
 
 ## 🚀 Features
 
@@ -120,6 +140,30 @@ python -m pytest
 
 ![Payment](frontend/src/assets/payment_preview.png)
 *Secure Payment Modal with Quantity Selection*
+
+## 🚀 Deployment
+
+### Current Status
+- **Frontend**: ✅ Deployed on Vercel (https://anand-sweets.vercel.app)
+- **Backend**: ⚠️ Local only (requires manual setup)
+
+### Why Backend Isn't Deployed
+This is a **portfolio/demo project** designed to showcase:
+- Full-stack development skills
+- Modern UI/UX design
+- Clean, maintainable code
+- Professional deployment practices
+
+For a production deployment with full backend functionality, you would need:
+1. Cloud database (PostgreSQL/MongoDB)
+2. Backend hosting (Render/Railway/Heroku)
+3. Environment variable configuration
+4. CORS updates for production domains
+
+### Recommended Usage
+- **For Portfolio**: Share the Vercel link to showcase UI/UX
+- **For Demos**: Run locally to demonstrate full functionality
+- **For Code Review**: Direct to GitHub repository
 
 ## 🤖 My AI Usage
 
